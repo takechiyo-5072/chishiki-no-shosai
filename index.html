@@ -28,14 +28,10 @@
 <section id="discover" class="hidden"><div class="section"><h2>悩みから探す</h2></div><p class="note">悩みを入力すると、登録済みの本のタグ・要約・メモから関連する本を探します。AIへの送信は行いません。</p><div class="toolbar"><input id="question" class="search" placeholder="例：上司への説明がうまくいかない"><button class="primary" onclick="findAdvice()">探す</button></div><div id="advice"></div></section>
 <section id="editor" class="hidden"><button class="back" onclick="navigate('home')">← 本棚へ戻る</button><h2 id="editorTitle">本を登録</h2><div class="panel"><div class="field"><label>タイトル *</label><input id="title" placeholder="書籍タイトル"></div><div class="field"><label>著者</label><input id="author" placeholder="著者名"></div><div class="field"><label>ジャンル</label><select id="category"><option>心理・人間関係</option><option>思考・コミュニケーション</option><option>仕事・組織</option><option>習慣・自己成長</option><option>歴史・教養</option><option>その他</option></select></div><div class="field"><label>読書状況</label><select id="status"><option>未設定</option><option>読了</option><option>読書中</option><option>読みたい</option></select></div><div class="field"><label>関連キーワード（カンマ区切り）</label><input id="tags" placeholder="例：会議, 説明, 論理"></div><div class="field"><label>本の要点・要約（自分で確認した内容）</label><textarea id="summary"></textarea></div><div class="field"><label>自分の学び・感想</label><textarea id="memo"></textarea></div><div class="field"><label>マインドマップの枝（1行に1つ）</label><textarea id="branches" placeholder="課題の分離&#10;目的論"></textarea></div><div class="actions"><button class="primary" onclick="saveBook()">保存する</button><button class="ghost" onclick="navigate('home')">キャンセル</button><button id="delete" class="ghost hidden" onclick="deleteBook()">削除</button></div></div></section>
 <section id="detail" class="hidden"><button class="back" onclick="navigate('home')">← 本棚へ戻る</button><div id="detailContent"></div></section><footer>試作版 Ver.0.1 · データはこのブラウザ内に保存されます</footer></main><nav class="tabs"><button id="tabhome" class="active" onclick="navigate('home')">▥ 本棚</button><button id="tabdiscover" onclick="navigate('discover')">⌕ 悩み検索</button><button onclick="showAdd()">＋ 登録</button></nav>
-<script src="books.js?v=2"></script>
+<script src="books.js?v=3"></script>
 <script>
 const KEY='shosai-books-v1';const sample=[{id:1,title:'嫌われる勇気',author:'岸見一郎・古賀史健',category:'心理・人間関係',status:'読了',tags:'人間関係,他人の評価,承認欲求,課題の分離,自由,成長',summary:'アドラー心理学を対話形式で紹介する本。目的論、課題の分離、承認欲求、共同体感覚などを通じて、自分の生き方を考える。\n※これは試作用の概要です。読書内容と照合して編集してください。',memo:'',branches:'目的論\nすべての悩みは対人関係\n課題の分離\n承認欲求からの自由\n共同体感覚',color:'#22578a',ink:'#fff'}, {id:2,title:'頭のいい人が話す前に考えていること',author:'安達裕哉',category:'思考・コミュニケーション',status:'読了',tags:'会議,説明,思考,論理,仕事,コミュニケーション,判断',summary:'話す前に考える習慣をテーマに、相手の理解や論理的な伝え方について学ぶ本。\n※これは試作用の概要です。読書内容と照合して編集してください。',memo:'',branches:'話す前に考える\n相手の立場を理解する\n論点を整理する\n伝わる言葉を選ぶ',color:'#ece5d4',ink:'#1a334b'}];
-const catalog = [
-  {title: sample[0].title, slug: 'courage', source: 'https://www.diamond.co.jp/book/9784478025819.html'},
-  {title: sample[1].title, slug: 'thinking', source: 'https://www.diamond.co.jp/book/9784478116692.html'},
-  ...addedBooks,
-];
+const catalog = [...originalBooks, ...addedBooks];
 const catalogVersion = 1;
 const titleKey = title => String(title ?? '').normalize('NFKC').toLowerCase().replace(/[\s、。，・「」『』!！]/g, '');
 function catalogTitles(entry) {
@@ -138,24 +134,28 @@ function deleteBook() {
 
 function illustratedMap(book) {
   const entry = catalogEntry(book);
-  if (entry?.map) {
-    const branches = entry.map.map(([label, detail, context, example]) => `<li class="reading-map-branch">
-      <h3>${esc(label)}</h3>
-      <p>${esc(detail)}</p>
-      <p class="reading-map-context">${esc(context)}</p>
-      <p class="reading-map-example"><strong>具体例</strong> ${esc(example)}</p>
-    </li>`).join('');
-    const source = entry.source
-      ? `<a href="${esc(entry.source)}" target="_blank" rel="noopener noreferrer">書籍紹介・目次</a>`
-      : '';
-    return `<section class="reading-map" aria-label="カラーマインドマップ">
-      <h3 class="reading-map-core">${esc(entry.theme)}</h3>
-      <ul class="reading-map-branches">${branches}</ul>
-      <p class="reading-map-practice"><strong>試してみる</strong> ${esc(entry.practice)}</p>
-      <p class="note">${esc(entry.note || '公開されている書籍紹介・目次をもとに整理。具体例と実践例は書斎での提案です。')} ${source}</p>
-    </section>`;
-  }
-  if (entry?.slug !== 'courage') return '';
+  if (!entry?.map) return '';
+
+
+  const branches = entry.map.map(([label, detail, context, example]) => `<li class="reading-map-branch">
+    <h3>${esc(label)}</h3>
+    <p>${esc(detail)}</p>
+    <p class="reading-map-context">${esc(context)}</p>
+    <p class="reading-map-example"><strong>具体例</strong> ${esc(example)}</p>
+  </li>`).join('');
+  const source = entry.source
+    ? `<a href="${esc(entry.source)}" target="_blank" rel="noopener noreferrer">書籍紹介・目次</a>`
+    : '';
+  return `<section class="reading-map" aria-label="カラーマインドマップ">
+    <h3 class="reading-map-core">${esc(entry.theme)}</h3>
+    <ul class="reading-map-branches">${branches}</ul>
+    <p class="reading-map-practice"><strong>試してみる</strong> ${esc(entry.practice)}</p>
+    <p class="note">${esc(entry.note || '公開されている書籍紹介・目次をもとに整理。具体例と実践例は書斎での提案です。')} ${source}</p>
+  </section>`;
+}
+
+function originalMapImage(book) {
+  if (catalogEntry(book)?.slug !== 'courage') return '';
 
   const image = 'assets/kirawareru-yuki-map.webp';
   return `<figure class="map-figure">
@@ -167,5 +167,5 @@ function illustratedMap(book) {
   </figure>`;
 }
 
-function showDetail(id){detailId=id;let b=books.find(x=>x.id===id);if(!b)return;let nodes=(b.branches||'').split('\n').filter(Boolean);$('detailContent').innerHTML=`<div class="detailhead">${cover(b)}<div><h2>${esc(b.title)}</h2><div class="sub">${esc(b.author)}</div><p class="tag">${esc(b.category)} · ${esc(b.status)}</p><button class="ghost" id="editDetail">編集する</button></div></div><div class="section"><h2>本の要点</h2></div><div class="panel summary">${esc(b.summary||catalogEntry(b)?.summary||'要約はまだ登録されていません。')}</div><div class="section"><h2>マインドマップ</h2></div><div class="panel">${illustratedMap(b)}<div class="mindmap"><div class="node center">${esc(b.title)}</div>${nodes.map(n=>`<div class="node">${esc(n)}</div>`).join('')}</div><p class="note">枝は編集画面から追加・修正できます。</p></div><div class="section"><h2>自分の学びメモ</h2></div><div class="panel summary">${esc(b.memo||'まだメモはありません。編集から書き込めます。')}</div>`;$('editDetail').onclick=()=>showAdd(id);navigate('detail')}function problem(q){navigate('discover');$('question').value=q;findAdvice()}function findAdvice(){let q=$('question').value.trim();let words=q.split(/[\s、。！？?！]+/).filter(Boolean);let related={人間関係:['人間関係','評価','承認','対人'],思考:['思考','論理','判断'],仕事:['仕事','会議','説明','組織'],成長:['成長','習慣','自由']};let terms=[...words,...Object.entries(related).filter(([k])=>q.includes(k)).flatMap(([,v])=>v)];let scored=books.map(b=>{let hay=[b.title,b.category,b.tags,b.summary,b.memo,catalogEntry(b)?.tags].join(' ').toLowerCase();let score=terms.reduce((n,t)=>n+(hay.includes(t.toLowerCase())?1:0),0);return {b,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);$('advice').innerHTML=scored.length?`<div class="panel"><h3>関連する本 ${scored.length}冊</h3>${scored.map(({b})=>`<div class="result"><strong>${esc(b.title)}</strong><p class="note">関連タグ：${esc(b.tags||b.category)}</p><button class="ghost" data-result="${b.id}">内容を見る</button></div>`).join('')}</div>`:'<div class="panel">一致する本はまだありません。キーワードを変えるか、関連する本を登録してみてください。</div>';document.querySelectorAll('[data-result]').forEach(x=>x.onclick=()=>showDetail(Number(x.dataset.result)))}render();
+function showDetail(id){detailId=id;let b=books.find(x=>x.id===id);if(!b)return;let nodes=(b.branches||'').split('\n').filter(Boolean);$('detailContent').innerHTML=`<div class="detailhead">${cover(b)}<div><h2>${esc(b.title)}</h2><div class="sub">${esc(b.author)}</div><p class="tag">${esc(b.category)} · ${esc(b.status)}</p><button class="ghost" id="editDetail">編集する</button></div></div><div class="section"><h2>本の要点</h2></div><div class="panel summary">${esc(b.summary||catalogEntry(b)?.summary||'要約はまだ登録されていません。')}</div><div class="section"><h2>マインドマップ</h2></div><div class="panel">${illustratedMap(b)}${originalMapImage(b)}<div class="mindmap"><div class="node center">${esc(b.title)}</div>${nodes.map(n=>`<div class="node">${esc(n)}</div>`).join('')}</div><p class="note">枝は編集画面から追加・修正できます。</p></div><div class="section"><h2>自分の学びメモ</h2></div><div class="panel summary">${esc(b.memo||'まだメモはありません。編集から書き込めます。')}</div>`;$('editDetail').onclick=()=>showAdd(id);navigate('detail')}function problem(q){navigate('discover');$('question').value=q;findAdvice()}function findAdvice(){let q=$('question').value.trim();let words=q.split(/[\s、。！？?！]+/).filter(Boolean);let related={人間関係:['人間関係','評価','承認','対人'],思考:['思考','論理','判断'],仕事:['仕事','会議','説明','組織'],成長:['成長','習慣','自由']};let terms=[...words,...Object.entries(related).filter(([k])=>q.includes(k)).flatMap(([,v])=>v)];let scored=books.map(b=>{let hay=[b.title,b.category,b.tags,b.summary,b.memo,catalogEntry(b)?.tags].join(' ').toLowerCase();let score=terms.reduce((n,t)=>n+(hay.includes(t.toLowerCase())?1:0),0);return {b,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);$('advice').innerHTML=scored.length?`<div class="panel"><h3>関連する本 ${scored.length}冊</h3>${scored.map(({b})=>`<div class="result"><strong>${esc(b.title)}</strong><p class="note">関連タグ：${esc(b.tags||b.category)}</p><button class="ghost" data-result="${b.id}">内容を見る</button></div>`).join('')}</div>`:'<div class="panel">一致する本はまだありません。キーワードを変えるか、関連する本を登録してみてください。</div>';document.querySelectorAll('[data-result]').forEach(x=>x.onclick=()=>showDetail(Number(x.dataset.result)))}render();
 </script></body></html>
