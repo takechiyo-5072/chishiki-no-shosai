@@ -23,12 +23,42 @@
 .reading-map-example strong{margin-right:4px}
 .reading-map-practice{background:#2a4154;border-radius:8px;margin:14px 0 8px;padding:10px 12px;font-size:14px;line-height:1.6}
 .reading-map .note a{color:#e5bd7b}
+
+.reading-map .diagram-guide{margin:7px 2px 14px;color:#ced9e4;font-size:13px;line-height:1.6}
+.diagram-mindmap .reading-map-core{max-width:32rem;margin:auto}
+.diagram-mindmap .reading-map-branches{margin-top:0;padding-top:17px}
+@media(min-width:700px){
+  .diagram-mindmap .reading-map-branches{grid-template-columns:1fr 1fr;border:0;margin:0;gap:12px 28px;padding:12px 0 0;background:linear-gradient(#ac956c,#ac956c) center / 2px 100% no-repeat}
+  .diagram-mindmap .reading-map-branch::before{width:14px;border-color:#ac956c}
+  .diagram-mindmap .reading-map-branch:nth-child(odd){border-left:0;border-right:4px solid var(--map-line)}
+  .diagram-mindmap .reading-map-branch:nth-child(odd)::before{left:calc(100% + 4px);right:auto}
+}
+.diagram-timeline .reading-map-branches{margin-left:13px;padding:2px 0 2px 20px;gap:14px}
+.diagram-timeline .reading-map-branch::before{content:attr(data-step);display:grid;place-items:center;top:12px;right:calc(100% + 13px);width:22px;height:22px;border:0;border-radius:50%;background:#e5bd7b;color:#142434;font-size:12px;font-weight:bold}
+.diagram-sketchnote .reading-map-branches{border:0;padding:0;margin:12px 0;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr))}
+.diagram-sketchnote .reading-map-branch{border:1px solid var(--map-line);border-top-width:4px;padding:12px}
+.diagram-sketchnote .reading-map-branch::before,.diagram-comic .reading-map-branch::before{display:none}
+.sketch-mark{display:inline-grid;place-items:center;width:26px;height:25px;margin-right:6px;border:1px solid var(--map-line);border-radius:7px;background:#ffffff8c;vertical-align:middle}
+.comic-panels{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.comic-panel{background:#edf2e8;color:#182a37;border:2px solid #d7b77e;padding:12px;border-radius:10px}
+.comic-panel:nth-child(even){background:#f8ead9}
+.comic-panel h3{font-size:15px;margin:0 0 12px}
+.comic-number{display:inline-grid;place-items:center;background:#24394c;color:#fff;border-radius:50%;width:23px;height:23px;margin-right:6px;font-size:13px}
+.comic-line{display:flex;align-items:flex-start;gap:7px;margin:9px 0}
+.comic-line:nth-of-type(2){flex-direction:row-reverse}
+.comic-face{display:grid;place-items:center;border:1px solid #31495a;border-radius:50%;background:#f4cf9b;min-width:31px;height:31px;font-size:16px}
+.comic-line:nth-of-type(2) .comic-face{background:#c7dfec}
+.comic-bubble{background:#fff;border:1px solid #385367;border-radius:4px 13px 13px 13px;padding:6px 9px;margin:0;min-width:0;font-size:13px;line-height:1.55}
+.comic-line:nth-of-type(2) .comic-bubble{border-radius:13px 4px 13px 13px}
+.comic-bubble strong{display:block;font-size:12px;color:#345772}
+.comic-notes{margin-top:14px;color:#e5bd7b}
+.comic-notes .reading-map-branches{margin-left:0;padding-left:0;border:0}
 </style></head><body><main class="app"><header><div><div class="eyebrow">PERSONAL KNOWLEDGE LIBRARY</div><h1>知識の書斎</h1><div class="sub">読んだ本が、これからの自分を助ける。</div></div><div style="font-size:34px;color:#c5a16a">▥</div></header>
 <section id="home"><div class="toolbar"><input id="search" class="search" placeholder="本のタイトル・著者・キーワードで検索"><button class="primary" onclick="showAdd()">＋ 本を登録</button></div><div id="chips" class="chips"></div><div class="section"><h2>あなたの本棚</h2><span id="count" class="sub"></span></div><div class="shelf"><div id="books" class="books"></div><div class="wood"></div></div><div class="section"><h2>こんなとき、何を読む？</h2></div><div class="problem-grid"><button class="problem" onclick="problem('人間関係')">人間関係<span>他人の評価・距離感</span></button><button class="problem" onclick="problem('思考')">考え方・判断<span>迷い・整理・決断</span></button><button class="problem" onclick="problem('仕事')">仕事・組織<span>会議・説明・リーダー</span></button><button class="problem" onclick="problem('成長')">習慣・成長<span>学び・行動・継続</span></button></div></section>
 <section id="discover" class="hidden"><div class="section"><h2>悩みから探す</h2></div><p class="note">悩みを入力すると、登録済みの本のタグ・要約・メモから関連する本を探します。AIへの送信は行いません。</p><div class="toolbar"><input id="question" class="search" placeholder="例：上司への説明がうまくいかない"><button class="primary" onclick="findAdvice()">探す</button></div><div id="advice"></div></section>
 <section id="editor" class="hidden"><button class="back" onclick="navigate('home')">← 本棚へ戻る</button><h2 id="editorTitle">本を登録</h2><div class="panel"><div class="field"><label>タイトル *</label><input id="title" placeholder="書籍タイトル"></div><div class="field"><label>著者</label><input id="author" placeholder="著者名"></div><div class="field"><label>ジャンル</label><select id="category"><option>心理・人間関係</option><option>思考・コミュニケーション</option><option>仕事・組織</option><option>習慣・自己成長</option><option>歴史・教養</option><option>その他</option></select></div><div class="field"><label>読書状況</label><select id="status"><option>未設定</option><option>読了</option><option>読書中</option><option>読みたい</option></select></div><div class="field"><label>関連キーワード（カンマ区切り）</label><input id="tags" placeholder="例：会議, 説明, 論理"></div><div class="field"><label>本の要点・要約（自分で確認した内容）</label><textarea id="summary"></textarea></div><div class="field"><label>自分の学び・感想</label><textarea id="memo"></textarea></div><div class="field"><label>マインドマップの枝（1行に1つ）</label><textarea id="branches" placeholder="課題の分離&#10;目的論"></textarea></div><div class="actions"><button class="primary" onclick="saveBook()">保存する</button><button class="ghost" onclick="navigate('home')">キャンセル</button><button id="delete" class="ghost hidden" onclick="deleteBook()">削除</button></div></div></section>
 <section id="detail" class="hidden"><button class="back" onclick="navigate('home')">← 本棚へ戻る</button><div id="detailContent"></div></section><footer>試作版 Ver.0.1 · データはこのブラウザ内に保存されます</footer></main><nav class="tabs"><button id="tabhome" class="active" onclick="navigate('home')">▥ 本棚</button><button id="tabdiscover" onclick="navigate('discover')">⌕ 悩み検索</button><button onclick="showAdd()">＋ 登録</button></nav>
-<script src="books.js?v=3"></script>
+<script src="books.js?v=4"></script>
 <script>
 const KEY='shosai-books-v1';const sample=[{id:1,title:'嫌われる勇気',author:'岸見一郎・古賀史健',category:'心理・人間関係',status:'読了',tags:'人間関係,他人の評価,承認欲求,課題の分離,自由,成長',summary:'アドラー心理学を対話形式で紹介する本。目的論、課題の分離、承認欲求、共同体感覚などを通じて、自分の生き方を考える。\n※これは試作用の概要です。読書内容と照合して編集してください。',memo:'',branches:'目的論\nすべての悩みは対人関係\n課題の分離\n承認欲求からの自由\n共同体感覚',color:'#22578a',ink:'#fff'}, {id:2,title:'頭のいい人が話す前に考えていること',author:'安達裕哉',category:'思考・コミュニケーション',status:'読了',tags:'会議,説明,思考,論理,仕事,コミュニケーション,判断',summary:'話す前に考える習慣をテーマに、相手の理解や論理的な伝え方について学ぶ本。\n※これは試作用の概要です。読書内容と照合して編集してください。',memo:'',branches:'話す前に考える\n相手の立場を理解する\n論点を整理する\n伝わる言葉を選ぶ',color:'#ece5d4',ink:'#1a334b'}];
 const catalog = [...originalBooks, ...addedBooks];
@@ -132,26 +162,57 @@ function deleteBook() {
   if (persist(nextBooks)) navigate('home');
 }
 
+const diagramLabels = {
+  mindmap: 'マインドマップ',
+  sketchnote: 'スケッチノート',
+  timeline: 'タイムライン',
+  comic: '学習マンガ',
+};
+const sketchMarks = {
+  thinking: ['◉', '▤', '♪', '？', '✎'],
+  'leaders-words': ['⚐', '♡', '◎', '⚖', '⌕'],
+  'motivational-quotes': ['▤', '☆', '♡', '◇'],
+  'psychology-illustrated': ['⌕', '◉', '☏', '♡', '✦'],
+};
+
 function illustratedMap(book) {
   const entry = catalogEntry(book);
   if (!entry?.map) return '';
 
-
-  const branches = entry.map.map(([label, detail, context, example]) => `<li class="reading-map-branch">
-    <h3>${esc(label)}</h3>
-    <p>${esc(detail)}</p>
-    <p class="reading-map-context">${esc(context)}</p>
-    <p class="reading-map-example"><strong>具体例</strong> ${esc(example)}</p>
-  </li>`).join('');
+  const format = entry.format || 'mindmap';
+  const branches = entry.map.map(([label, detail, context, example], index) => {
+    const mark = sketchMarks[entry.slug]?.[index];
+    return `<li class="reading-map-branch" data-step="${index + 1}">
+      <h3>${mark ? `<span class="sketch-mark" aria-hidden="true">${mark}</span>` : ''}${esc(label)}</h3>
+      <p>${esc(detail)}</p>
+      <p class="reading-map-context">${esc(context)}</p>
+      <p class="reading-map-example"><strong>具体例</strong> ${esc(example)}</p>
+    </li>`;
+  }).join('');
+  const points = format === 'timeline'
+    ? `<ol class="reading-map-branches">${branches}</ol>`
+    : `<ul class="reading-map-branches">${branches}</ul>`;
+  const visual = format === 'comic'
+    ? `${comicPanels(entry.panels)}<details class="comic-notes"><summary>考え方と具体例を見返す</summary>${points}</details>`
+    : points;
   const source = entry.source
     ? `<a href="${esc(entry.source)}" target="_blank" rel="noopener noreferrer">書籍紹介・目次</a>`
     : '';
-  return `<section class="reading-map" aria-label="カラーマインドマップ">
+  return `<section class="reading-map diagram-${format}" aria-label="${diagramLabels[format]}">
     <h3 class="reading-map-core">${esc(entry.theme)}</h3>
-    <ul class="reading-map-branches">${branches}</ul>
+    <p class="diagram-guide">${esc(entry.guide)}</p>
+    ${visual}
     <p class="reading-map-practice"><strong>試してみる</strong> ${esc(entry.practice)}</p>
     <p class="note">${esc(entry.note || '公開されている書籍紹介・目次をもとに整理。具体例と実践例は書斎での提案です。')} ${source}</p>
   </section>`;
+}
+
+function comicPanels(panels) {
+  return `<ol class="comic-panels" aria-label="書斎で作成した場面例">${panels.map(([scene, first, opening, second, reply], index) => `<li class="comic-panel">
+    <h3><span class="comic-number">${index + 1}</span>${esc(scene)}</h3>
+    <div class="comic-line"><span class="comic-face" aria-hidden="true">•ᴗ•</span><p class="comic-bubble"><strong>${esc(first)}</strong>${esc(opening)}</p></div>
+    <div class="comic-line"><span class="comic-face" aria-hidden="true">•‿•</span><p class="comic-bubble"><strong>${esc(second)}</strong>${esc(reply)}</p></div>
+  </li>`).join('')}</ol><p class="note">書籍の考え方を職場に当てはめたオリジナルの場面です。</p>`;
 }
 
 function originalMapImage(book) {
@@ -167,5 +228,5 @@ function originalMapImage(book) {
   </figure>`;
 }
 
-function showDetail(id){detailId=id;let b=books.find(x=>x.id===id);if(!b)return;let nodes=(b.branches||'').split('\n').filter(Boolean);$('detailContent').innerHTML=`<div class="detailhead">${cover(b)}<div><h2>${esc(b.title)}</h2><div class="sub">${esc(b.author)}</div><p class="tag">${esc(b.category)} · ${esc(b.status)}</p><button class="ghost" id="editDetail">編集する</button></div></div><div class="section"><h2>本の要点</h2></div><div class="panel summary">${esc(b.summary||catalogEntry(b)?.summary||'要約はまだ登録されていません。')}</div><div class="section"><h2>マインドマップ</h2></div><div class="panel">${illustratedMap(b)}${originalMapImage(b)}<div class="mindmap"><div class="node center">${esc(b.title)}</div>${nodes.map(n=>`<div class="node">${esc(n)}</div>`).join('')}</div><p class="note">枝は編集画面から追加・修正できます。</p></div><div class="section"><h2>自分の学びメモ</h2></div><div class="panel summary">${esc(b.memo||'まだメモはありません。編集から書き込めます。')}</div>`;$('editDetail').onclick=()=>showAdd(id);navigate('detail')}function problem(q){navigate('discover');$('question').value=q;findAdvice()}function findAdvice(){let q=$('question').value.trim();let words=q.split(/[\s、。！？?！]+/).filter(Boolean);let related={人間関係:['人間関係','評価','承認','対人'],思考:['思考','論理','判断'],仕事:['仕事','会議','説明','組織'],成長:['成長','習慣','自由']};let terms=[...words,...Object.entries(related).filter(([k])=>q.includes(k)).flatMap(([,v])=>v)];let scored=books.map(b=>{let hay=[b.title,b.category,b.tags,b.summary,b.memo,catalogEntry(b)?.tags].join(' ').toLowerCase();let score=terms.reduce((n,t)=>n+(hay.includes(t.toLowerCase())?1:0),0);return {b,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);$('advice').innerHTML=scored.length?`<div class="panel"><h3>関連する本 ${scored.length}冊</h3>${scored.map(({b})=>`<div class="result"><strong>${esc(b.title)}</strong><p class="note">関連タグ：${esc(b.tags||b.category)}</p><button class="ghost" data-result="${b.id}">内容を見る</button></div>`).join('')}</div>`:'<div class="panel">一致する本はまだありません。キーワードを変えるか、関連する本を登録してみてください。</div>';document.querySelectorAll('[data-result]').forEach(x=>x.onclick=()=>showDetail(Number(x.dataset.result)))}render();
+function showDetail(id){detailId=id;let b=books.find(x=>x.id===id);if(!b)return;const format=diagramLabels[catalogEntry(b)?.format] || 'マインドマップ';let nodes=(b.branches||'').split('\n').filter(Boolean);$('detailContent').innerHTML=`<div class="detailhead">${cover(b)}<div><h2>${esc(b.title)}</h2><div class="sub">${esc(b.author)}</div><p class="tag">${esc(b.category)} · ${esc(b.status)}</p><button class="ghost" id="editDetail">編集する</button></div></div><div class="section"><h2>本の要点</h2></div><div class="panel summary">${esc(b.summary||catalogEntry(b)?.summary||'要約はまだ登録されていません。')}</div><div class="section"><h2>${format}</h2></div><div class="panel">${illustratedMap(b)}${originalMapImage(b)}<div class="mindmap"><div class="node center">${esc(b.title)}</div>${nodes.map(n=>`<div class="node">${esc(n)}</div>`).join('')}</div><p class="note">枝は編集画面から追加・修正できます。</p></div><div class="section"><h2>自分の学びメモ</h2></div><div class="panel summary">${esc(b.memo||'まだメモはありません。編集から書き込めます。')}</div>`;$('editDetail').onclick=()=>showAdd(id);navigate('detail')}function problem(q){navigate('discover');$('question').value=q;findAdvice()}function findAdvice(){let q=$('question').value.trim();let words=q.split(/[\s、。！？?！]+/).filter(Boolean);let related={人間関係:['人間関係','評価','承認','対人'],思考:['思考','論理','判断'],仕事:['仕事','会議','説明','組織'],成長:['成長','習慣','自由']};let terms=[...words,...Object.entries(related).filter(([k])=>q.includes(k)).flatMap(([,v])=>v)];let scored=books.map(b=>{let hay=[b.title,b.category,b.tags,b.summary,b.memo,catalogEntry(b)?.tags].join(' ').toLowerCase();let score=terms.reduce((n,t)=>n+(hay.includes(t.toLowerCase())?1:0),0);return {b,score}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);$('advice').innerHTML=scored.length?`<div class="panel"><h3>関連する本 ${scored.length}冊</h3>${scored.map(({b})=>`<div class="result"><strong>${esc(b.title)}</strong><p class="note">関連タグ：${esc(b.tags||b.category)}</p><button class="ghost" data-result="${b.id}">内容を見る</button></div>`).join('')}</div>`:'<div class="panel">一致する本はまだありません。キーワードを変えるか、関連する本を登録してみてください。</div>';document.querySelectorAll('[data-result]').forEach(x=>x.onclick=()=>showDetail(Number(x.dataset.result)))}render();
 </script></body></html>
