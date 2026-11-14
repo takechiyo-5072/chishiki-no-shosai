@@ -2,6 +2,7 @@ const originalBooks = [
   {
     title: '嫌われる勇気',
     slug: 'courage',
+    hub: '自分で選べることに目を向ける',
     format: 'mindmap', guide: "自分の行動・相手の判断・周囲への貢献のつながりを一望する。",
     source: 'https://www.diamond.co.jp/book/9784478025819.html',
     theme: '他人の評価に振り回されず、自分の行動を選ぶ',
@@ -112,7 +113,8 @@ const addedBooks = [
     practice: '3項目を一つずつ書き、今の仕事で試せる組み合わせを一つ考える。',
   },
   {
-    id: 8, slug: 'economics-basics', title: '今さら聞けない！経済のキホンが2時間で全部頭に入る', author: '吉田泰史',
+    id: 8, slug: 'economics-basics',
+    hub: '経済のニュースをつなげて読む', title: '今さら聞けない！経済のキホンが2時間で全部頭に入る', author: '吉田泰史',
     format: 'mindmap', guide: "市場・GDP・財政・金融・為替を、ニュースの読み方につなげる。",
     category: '歴史・教養', tags: '経済,市場,景気,GDP,財政,金融,日銀,円高,円安,為替,貿易',
     source: 'https://www.subarusya.jp/book/b475195.html',

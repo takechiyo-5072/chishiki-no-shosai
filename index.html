@@ -7,58 +7,78 @@
 
 .cover.cover-photo{display:grid;place-items:center;padding:0;border:0;overflow:hidden;background:#142330}
 .cover-photo img{width:100%;height:100%;object-fit:contain;min-height:0}
-.reading-map{margin-bottom:24px}
-.reading-map-core{background:#aa8858;color:#142434;padding:14px;margin:0;text-align:center;border-radius:10px;font-size:17px}
-.reading-map-branches{list-style:none;padding:0 0 0 19px;margin:12px 0 12px 11px;border-left:2px solid #ac956c;display:grid;gap:10px}
-.reading-map-branch{position:relative;background:var(--map-bg);color:#202d39;border-left:4px solid var(--map-line);border-radius:8px;padding:9px 11px;--map-bg:#e0efff;--map-line:#4590bf}
-.reading-map-branch::before{content:"";position:absolute;top:50%;right:calc(100% + 4px);width:19px;border-top:2px solid var(--map-line)}
-.reading-map-branch:nth-child(2){--map-bg:#e2f3e5;--map-line:#47906a}
-.reading-map-branch:nth-child(3){--map-bg:#f4e8fc;--map-line:#9663ac}
-.reading-map-branch:nth-child(4){--map-bg:#fff0db;--map-line:#b5793b}
-.reading-map-branch:nth-child(5){--map-bg:#ffe7eb;--map-line:#bb6274}
-.reading-map-branch h3{margin:0 0 3px;font-size:15px}
-.reading-map-branch p{margin:0;font-size:14px;line-height:1.55}
+/* Reading sheets keep the Japanese text selectable and legible at phone width. */
+.reading-map{--paper:#fff8e7;--ink:#173044;--accent:#177565;margin-bottom:24px;padding:clamp(12px,3vw,24px);background:var(--paper);color:var(--ink);border:2px solid #d4b47b;border-radius:15px;line-height:1.65}
+.reading-map-core{font-family:"Hiragino Maru Gothic ProN",serif;font-size:clamp(18px,4.5vw,28px);line-height:1.35;margin:0}
+.sheet-head{border-bottom:3px double #9b7838;padding-bottom:12px;margin-bottom:15px}
+.sheet-book{display:block;color:#506371;font-size:12px;margin-bottom:4px}
+.diagram-guide{font-size:13px;margin:7px 0 0}
+.reading-map-branches,.comic-panels{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.reading-map-branch{position:relative;background:var(--tint);border:1.5px solid var(--branch);border-radius:12px 9px 13px 8px;padding:12px;min-width:0;--branch:#176e66;--tint:#e2f4ec}
+.reading-map-branch:nth-child(2){--branch:#974357;--tint:#f9e8eb}
+.reading-map-branch:nth-child(3){--branch:#795600;--tint:#fbefc7}
+.reading-map-branch:nth-child(4){--branch:#295e89;--tint:#e4eff8}
+.reading-map-branch:nth-child(5){--branch:#704984;--tint:#f1e7f5}
+.reading-map-branch h3,.comic-panel h3{font-size:16px;line-height:1.4;margin:0 0 7px;color:var(--branch,var(--ink))}
+.reading-map-branch p{margin:0;font-size:14px}
 .reading-map-branch .reading-map-context{margin-top:6px}
-.reading-map-branch .reading-map-example{margin-top:9px;padding-top:7px;border-top:1px solid #202d392e}
-.reading-map-example strong{margin-right:4px}
-.reading-map-practice{background:#2a4154;border-radius:8px;margin:14px 0 8px;padding:10px 12px;font-size:14px;line-height:1.6}
-.reading-map .note a{color:#e5bd7b}
-
-.reading-map .diagram-guide{margin:7px 2px 14px;color:#ced9e4;font-size:13px;line-height:1.6}
-.diagram-mindmap .reading-map-core{max-width:32rem;margin:auto}
-.diagram-mindmap .reading-map-branches{margin-top:0;padding-top:17px}
-@media(min-width:700px){
-  .diagram-mindmap .reading-map-branches{grid-template-columns:1fr 1fr;border:0;margin:0;gap:12px 28px;padding:12px 0 0;background:linear-gradient(#ac956c,#ac956c) center / 2px 100% no-repeat}
-  .diagram-mindmap .reading-map-branch::before{width:14px;border-color:#ac956c}
-  .diagram-mindmap .reading-map-branch:nth-child(odd){border-left:0;border-right:4px solid var(--map-line)}
-  .diagram-mindmap .reading-map-branch:nth-child(odd)::before{left:calc(100% + 4px);right:auto}
-}
-.diagram-timeline .reading-map-branches{margin-left:13px;padding:2px 0 2px 20px;gap:14px}
-.diagram-timeline .reading-map-branch::before{content:attr(data-step);display:grid;place-items:center;top:12px;right:calc(100% + 13px);width:22px;height:22px;border:0;border-radius:50%;background:#e5bd7b;color:#142434;font-size:12px;font-weight:bold}
-.diagram-sketchnote .reading-map-branches{border:0;padding:0;margin:12px 0;grid-template-columns:repeat(auto-fit,minmax(min(100%,245px),1fr))}
-.diagram-sketchnote .reading-map-branch{border:1px solid var(--map-line);border-top-width:4px;padding:12px}
-.diagram-sketchnote .reading-map-branch::before,.diagram-comic .reading-map-branch::before{display:none}
-.sketch-mark{display:inline-grid;place-items:center;width:26px;height:25px;margin-right:6px;border:1px solid var(--map-line);border-radius:7px;background:#ffffff8c;vertical-align:middle}
-.comic-panels{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
-.comic-panel{background:#edf2e8;color:#182a37;border:2px solid #d7b77e;padding:12px;border-radius:10px}
-.comic-panel:nth-child(even){background:#f8ead9}
-.comic-panel h3{font-size:15px;margin:0 0 12px}
+.reading-map-branch .reading-map-example{margin-top:9px;border-radius:6px;padding:7px 8px;background:#fff9}
+.reading-map-example strong{color:var(--branch);margin-right:4px}
+.reading-map-practice{border:1px solid #b09248;background:#fff0b0;border-radius:9px;margin:16px 0 8px;padding:9px 11px;font-size:14px}
+.reading-map-practice strong{margin-right:5px}
+.reading-map .note,.reading-map .note a{color:#42566a}
+.diagram-mindmap .sheet-head{text-align:center}
+.map-hub{font-weight:700;background:#fff;border:2px solid #93723d;border-radius:28% 25% 22% 29% / 31% 26% 31% 28%;padding:8px 13px;margin:0 auto 15px;text-align:center;max-width:310px;position:relative;z-index:1}
+.map-overview{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px;position:relative;padding:5px 0 15px;margin-bottom:10px;background:linear-gradient(#947846,#947846) center top / 3px calc(100% - 15px) no-repeat}
+.map-overview .map-hub{grid-column:1/-1;margin:0 auto;padding:7px 16px;font-size:14px}
+.map-branch-label{position:relative;text-align:center;padding:5px;border-radius:8px;border:1px solid var(--ink);background:#e2f4ec;font-size:12px;font-weight:bold}
+.map-branch-label::after{content:"";position:absolute;left:100%;top:50%;width:13px;border-top:2px solid var(--ink)}
+.map-branch-label:nth-of-type(even)::after{left:auto;right:100%}
+.map-branch-label:nth-of-type(2){background:#f9e8eb}
+.map-branch-label:nth-of-type(3){background:#fbefc7}
+.map-branch-label:nth-of-type(4){background:#e4eff8}
+.map-branch-label:nth-of-type(5){background:#f1e7f5;grid-column:1/-1;justify-self:center;padding:5px 16px}
+.map-branch-label:nth-of-type(5)::after{display:none}
+.diagram-mindmap .reading-map-branches{padding:0;margin:0}
+.diagram-timeline .reading-map-branch::before{content:"";position:absolute;top:22px;right:100%;width:20px;border-top:3px solid var(--branch)}
+.diagram-sketchnote{background:repeating-linear-gradient(transparent 0 24px,#d9dfd76b 24px 25px),var(--paper);border-left:5px double #947846}
+.diagram-sketchnote .sheet-head{border-bottom-color:#3d776f}
+.diagram-sketchnote .reading-map-branches{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.diagram-sketchnote .reading-map-branch{background:#fffaf0}
+.diagram-sketchnote h3 strong{background:linear-gradient(transparent 49%,#f9dd6a 49% 94%,transparent 94%)}
+.sketch-mark{float:right;width:64px;height:64px;margin:0 0 4px 8px;background:url('assets/reading-sheets/sketch.webp') no-repeat;background-size:400% 400%;mix-blend-mode:multiply}
+.diagram-sketchnote .reading-map-example{clear:both;background:var(--tint)}
+.diagram-timeline .sheet-head{padding:12px;background:#163c3a;color:#fff9e8;border-radius:8px;border-bottom:3px solid #bda163}
+.diagram-timeline .sheet-book{color:#e7e3d2}
+.diagram-timeline .reading-map-branches{border-left:3px solid #95712f;margin-left:12px;padding-left:23px;position:relative}
+.diagram-timeline .reading-map-branches::after{content:"▼";color:#95712f;position:absolute;left:-8px;bottom:-10px;font-size:13px}
+.diagram-timeline .reading-map-branch::before{content:attr(data-step);display:grid;place-items:center;top:12px;right:calc(100% + 11px);width:24px;height:24px;border:1px solid #fff2cb;border-radius:50%;background:#155647;color:#fff;font-size:12px;font-weight:bold}
+.comic-panels{grid-template-columns:repeat(auto-fit,minmax(min(100%,290px),1fr))}
+.comic-panel{padding:0;overflow:hidden;border:2px solid #344451;background:#fdf4df;border-radius:8px}
+.comic-panel h3{margin:0;background:#e1edee;padding:7px 8px;border-bottom:1px solid #344451}
 .comic-number{display:inline-grid;place-items:center;background:#24394c;color:#fff;border-radius:50%;width:23px;height:23px;margin-right:6px;font-size:13px}
-.comic-line{display:flex;align-items:flex-start;gap:7px;margin:9px 0}
-.comic-line:nth-of-type(2){flex-direction:row-reverse}
-.comic-face{display:grid;place-items:center;border:1px solid #31495a;border-radius:50%;background:#f4cf9b;min-width:31px;height:31px;font-size:16px}
-.comic-line:nth-of-type(2) .comic-face{background:#c7dfec}
-.comic-bubble{background:#fff;border:1px solid #385367;border-radius:4px 13px 13px 13px;padding:6px 9px;margin:0;min-width:0;font-size:13px;line-height:1.55}
-.comic-line:nth-of-type(2) .comic-bubble{border-radius:13px 4px 13px 13px}
+.comic-scene{aspect-ratio:8/3;background-image:var(--comic-art);background-size:100% 400%;background-position:center var(--frame);background-repeat:no-repeat}
+.comic-line{display:flex;margin:9px}
+.comic-line:nth-of-type(3){justify-content:flex-end}
+.comic-bubble{background:#fff;border:1px solid #385367;border-radius:4px 13px 13px 13px;padding:6px 9px;margin:0;min-width:0;font-size:13px;line-height:1.55;max-width:93%}
+.comic-line:nth-of-type(3) .comic-bubble{border-radius:13px 4px 13px 13px;background:#f3faff}
 .comic-bubble strong{display:block;font-size:12px;color:#345772}
-.comic-notes{margin-top:14px;color:#e5bd7b}
-.comic-notes .reading-map-branches{margin-left:0;padding-left:0;border:0}
+.comic-notes{margin-top:14px}
+.comic-notes .reading-map-branches{margin-top:9px}
+@media(min-width:650px){
+  .diagram-mindmap .reading-map-branches{grid-template-columns:1fr 1fr}
+  .diagram-timeline .reading-map-branches{grid-template-columns:1fr 1fr;gap:12px 48px;border:0;padding:0;margin:0;background:linear-gradient(#95712f,#95712f) center / 3px 100% no-repeat}
+  .diagram-timeline .reading-map-branch:nth-child(odd){grid-column:1}
+  .diagram-timeline .reading-map-branch:nth-child(even){grid-column:2;margin-top:34px}
+  .diagram-timeline .reading-map-branch:nth-child(odd)::before{left:calc(100% + 12px);right:auto}
+  .diagram-timeline .reading-map-branches::after{left:calc(50% - 7px)}
+}
 </style></head><body><main class="app"><header><div><div class="eyebrow">PERSONAL KNOWLEDGE LIBRARY</div><h1>知識の書斎</h1><div class="sub">読んだ本が、これからの自分を助ける。</div></div><div style="font-size:34px;color:#c5a16a">▥</div></header>
 <section id="home"><div class="toolbar"><input id="search" class="search" placeholder="本のタイトル・著者・キーワードで検索"><button class="primary" onclick="showAdd()">＋ 本を登録</button></div><div id="chips" class="chips"></div><div class="section"><h2>あなたの本棚</h2><span id="count" class="sub"></span></div><div class="shelf"><div id="books" class="books"></div><div class="wood"></div></div><div class="section"><h2>こんなとき、何を読む？</h2></div><div class="problem-grid"><button class="problem" onclick="problem('人間関係')">人間関係<span>他人の評価・距離感</span></button><button class="problem" onclick="problem('思考')">考え方・判断<span>迷い・整理・決断</span></button><button class="problem" onclick="problem('仕事')">仕事・組織<span>会議・説明・リーダー</span></button><button class="problem" onclick="problem('成長')">習慣・成長<span>学び・行動・継続</span></button></div></section>
 <section id="discover" class="hidden"><div class="section"><h2>悩みから探す</h2></div><p class="note">悩みを入力すると、登録済みの本のタグ・要約・メモから関連する本を探します。AIへの送信は行いません。</p><div class="toolbar"><input id="question" class="search" placeholder="例：上司への説明がうまくいかない"><button class="primary" onclick="findAdvice()">探す</button></div><div id="advice"></div></section>
 <section id="editor" class="hidden"><button class="back" onclick="navigate('home')">← 本棚へ戻る</button><h2 id="editorTitle">本を登録</h2><div class="panel"><div class="field"><label>タイトル *</label><input id="title" placeholder="書籍タイトル"></div><div class="field"><label>著者</label><input id="author" placeholder="著者名"></div><div class="field"><label>ジャンル</label><select id="category"><option>心理・人間関係</option><option>思考・コミュニケーション</option><option>仕事・組織</option><option>習慣・自己成長</option><option>歴史・教養</option><option>その他</option></select></div><div class="field"><label>読書状況</label><select id="status"><option>未設定</option><option>読了</option><option>読書中</option><option>読みたい</option></select></div><div class="field"><label>関連キーワード（カンマ区切り）</label><input id="tags" placeholder="例：会議, 説明, 論理"></div><div class="field"><label>本の要点・要約（自分で確認した内容）</label><textarea id="summary"></textarea></div><div class="field"><label>自分の学び・感想</label><textarea id="memo"></textarea></div><div class="field"><label>マインドマップの枝（1行に1つ）</label><textarea id="branches" placeholder="課題の分離&#10;目的論"></textarea></div><div class="actions"><button class="primary" onclick="saveBook()">保存する</button><button class="ghost" onclick="navigate('home')">キャンセル</button><button id="delete" class="ghost hidden" onclick="deleteBook()">削除</button></div></div></section>
 <section id="detail" class="hidden"><button class="back" onclick="navigate('home')">← 本棚へ戻る</button><div id="detailContent"></div></section><footer>試作版 Ver.0.1 · データはこのブラウザ内に保存されます</footer></main><nav class="tabs"><button id="tabhome" class="active" onclick="navigate('home')">▥ 本棚</button><button id="tabdiscover" onclick="navigate('discover')">⌕ 悩み検索</button><button onclick="showAdd()">＋ 登録</button></nav>
-<script src="books.js?v=4"></script>
+<script src="books.js?v=5"></script>
 <script>
 const KEY='shosai-books-v1';const sample=[{id:1,title:'嫌われる勇気',author:'岸見一郎・古賀史健',category:'心理・人間関係',status:'読了',tags:'人間関係,他人の評価,承認欲求,課題の分離,自由,成長',summary:'アドラー心理学を対話形式で紹介する本。目的論、課題の分離、承認欲求、共同体感覚などを通じて、自分の生き方を考える。\n※これは試作用の概要です。読書内容と照合して編集してください。',memo:'',branches:'目的論\nすべての悩みは対人関係\n課題の分離\n承認欲求からの自由\n共同体感覚',color:'#22578a',ink:'#fff'}, {id:2,title:'頭のいい人が話す前に考えていること',author:'安達裕哉',category:'思考・コミュニケーション',status:'読了',tags:'会議,説明,思考,論理,仕事,コミュニケーション,判断',summary:'話す前に考える習慣をテーマに、相手の理解や論理的な伝え方について学ぶ本。\n※これは試作用の概要です。読書内容と照合して編集してください。',memo:'',branches:'話す前に考える\n相手の立場を理解する\n論点を整理する\n伝わる言葉を選ぶ',color:'#ece5d4',ink:'#1a334b'}];
 const catalog = [...originalBooks, ...addedBooks];
@@ -169,10 +189,10 @@ const diagramLabels = {
   comic: '学習マンガ',
 };
 const sketchMarks = {
-  thinking: ['◉', '▤', '♪', '？', '✎'],
-  'leaders-words': ['⚐', '♡', '◎', '⚖', '⌕'],
-  'motivational-quotes': ['▤', '☆', '♡', '◇'],
-  'psychology-illustrated': ['⌕', '◉', '☏', '♡', '✦'],
+  thinking: [0, 1, 2, 3, 4],
+  'leaders-words': [5, 6, 7, 8, 9],
+  'motivational-quotes': [10, 11, 12, 13],
+  'psychology-illustrated': [0, 14, 3, 15, 2],
 };
 
 function illustratedMap(book) {
@@ -183,7 +203,8 @@ function illustratedMap(book) {
   const branches = entry.map.map(([label, detail, context, example], index) => {
     const mark = sketchMarks[entry.slug]?.[index];
     return `<li class="reading-map-branch" data-step="${index + 1}">
-      <h3>${mark ? `<span class="sketch-mark" aria-hidden="true">${mark}</span>` : ''}${esc(label)}</h3>
+      ${mark === undefined ? '' : `<span class="sketch-mark" aria-hidden="true" style="background-position:${(mark % 4) * 100 / 3}% ${Math.floor(mark / 4) * 100 / 3}%"></span>`}
+      <h3><strong>${esc(label)}</strong></h3>
       <p>${esc(detail)}</p>
       <p class="reading-map-context">${esc(context)}</p>
       <p class="reading-map-example"><strong>具体例</strong> ${esc(example)}</p>
@@ -193,25 +214,36 @@ function illustratedMap(book) {
     ? `<ol class="reading-map-branches">${branches}</ol>`
     : `<ul class="reading-map-branches">${branches}</ul>`;
   const visual = format === 'comic'
-    ? `${comicPanels(entry.panels)}<details class="comic-notes"><summary>考え方と具体例を見返す</summary>${points}</details>`
+    ? `${comicPanels(entry.slug, entry.panels)}<details class="comic-notes"><summary>考え方と具体例を見返す</summary>${points}</details>`
     : points;
   const source = entry.source
     ? `<a href="${esc(entry.source)}" target="_blank" rel="noopener noreferrer">書籍紹介・目次</a>`
     : '';
   return `<section class="reading-map diagram-${format}" aria-label="${diagramLabels[format]}">
-    <h3 class="reading-map-core">${esc(entry.theme)}</h3>
-    <p class="diagram-guide">${esc(entry.guide)}</p>
+    <div class="sheet-head">
+      <span class="sheet-book">${esc(book.title)}</span>
+      <h3 class="reading-map-core">${esc(entry.theme)}</h3>
+      <p class="diagram-guide">${esc(entry.guide)}</p>
+    </div>
+    ${format === 'mindmap' ? mapOverview(entry) : ''}
     ${visual}
     <p class="reading-map-practice"><strong>試してみる</strong> ${esc(entry.practice)}</p>
     <p class="note">${esc(entry.note || '公開されている書籍紹介・目次をもとに整理。具体例と実践例は書斎での提案です。')} ${source}</p>
   </section>`;
 }
 
-function comicPanels(panels) {
-  return `<ol class="comic-panels" aria-label="書斎で作成した場面例">${panels.map(([scene, first, opening, second, reply], index) => `<li class="comic-panel">
+function mapOverview(entry) {
+  const labels = entry.map.map(([label]) => `<span class="map-branch-label">${esc(label)}</span>`);
+  return `<div class="map-overview" aria-label="全体像">${labels.slice(0, 2).join('')}
+    <div class="map-hub">${esc(entry.hub || entry.theme)}</div>${labels.slice(2).join('')}</div>`;
+}
+
+function comicPanels(slug, panels) {
+  return `<ol class="comic-panels" aria-label="書斎で作成した場面例" style="--comic-art:url(assets/reading-sheets/${esc(slug)}.webp)">${panels.map(([scene, first, opening, second, reply], index) => `<li class="comic-panel">
     <h3><span class="comic-number">${index + 1}</span>${esc(scene)}</h3>
-    <div class="comic-line"><span class="comic-face" aria-hidden="true">•ᴗ•</span><p class="comic-bubble"><strong>${esc(first)}</strong>${esc(opening)}</p></div>
-    <div class="comic-line"><span class="comic-face" aria-hidden="true">•‿•</span><p class="comic-bubble"><strong>${esc(second)}</strong>${esc(reply)}</p></div>
+    <div class="comic-scene" aria-hidden="true" style="--frame:${index * 100 / Math.max(1, panels.length - 1)}%"></div>
+    <div class="comic-line"><p class="comic-bubble"><strong>${esc(first)}</strong>${esc(opening)}</p></div>
+    <div class="comic-line"><p class="comic-bubble"><strong>${esc(second)}</strong>${esc(reply)}</p></div>
   </li>`).join('')}</ol><p class="note">書籍の考え方を職場に当てはめたオリジナルの場面です。</p>`;
 }
 
